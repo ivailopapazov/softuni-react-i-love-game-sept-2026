@@ -6,9 +6,16 @@ export default function Home() {
     const [latestGames, setLatestGames] = useState([]);
 
     useEffect(() => {
-        request('/games?order=created_at.desc&limit=3')
+        // TODO Refactor abort controller logic
+        const abortController = new AbortController();
+
+        request('/games?order=created_at.desc&limit=3', 'GET', null, { signal: abortController.signal })
             .then(setLatestGames)
             .catch(error => alert(error));
+
+        return () => {
+            abortController.abort("Home component unmounted");
+        }
     }, []);
 
     return (

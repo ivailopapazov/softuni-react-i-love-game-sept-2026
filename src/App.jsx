@@ -1,5 +1,6 @@
 import Footer from "./components/footer/Footer"
 import Header from "./components/header/Header"
+import Register from "./components/register/Register"
 import Home from "./components/home/Home"
 import Catalog from "./components/catalog/Catalog"
 import { Route, Routes } from "react-router"
@@ -16,6 +17,7 @@ function App() {
                 <Route path="/catalog" element={<Catalog />} />
                 <Route path="/games/:gameId" element={<GameDetails />} />
                 <Route path="/games/create" element={<GameCreate />} />
+                <Route path="/register" element={<Register />} />
             </Routes>
 
             <Footer />

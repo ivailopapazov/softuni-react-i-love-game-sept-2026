@@ -1,5 +1,5 @@
 
-const url = "https://juiegzuqlaacubisfriq.supabase.co/rest/v1/";
+const url = "https://juiegzuqlaacubisfriq.supabase.co/rest/v1";
 
 export default async function request(path = "/", method = "GET", data = null, opts = {}) {
     const options = {

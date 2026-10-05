@@ -13,6 +13,8 @@ const initialValues = {
 
 export default function GameCreate() {
     const [values, setValues] = useState(initialValues);
+    const [isFileUpload, setIsFileUpload] = useState(false);
+    const [previewUrl, setPreviewUrl] = useState(null); 
     const navigate = useNavigate();
 
     const changeHandler = (e) => {
@@ -23,6 +25,8 @@ export default function GameCreate() {
     };
 
     const submitAction = async () => {
+        // console.log(formData.get('image'));
+
         try {
             await request("/games", "POST", {
                 ...values,
@@ -34,6 +38,15 @@ export default function GameCreate() {
             alert(error.message);
         }
     };
+
+    const fileChangeHandler = (e) => {
+        // Get file metadata on change
+        const file = e.target.files[0];
+
+        const previewUrl = URL.createObjectURL(file);
+
+        setPreviewUrl(previewUrl);
+    }
 
     return (
         <section id="add-page">
@@ -62,10 +75,24 @@ export default function GameCreate() {
                         <input type="date" id="releaseDate" name="releaseDate" value={values.releaseDate} onChange={changeHandler} />
                     </div>
 
-                    <div className="form-group-full">
-                        <label htmlFor="imageUrl">Image URL:</label>
-                        <input type="text" id="imageUrl" name="imageUrl" placeholder="Enter image URL..." value={values.imageUrl} onChange={changeHandler} />
+                    <div className="form-group-half">
+                        <label htmlFor="toggleFileUpload">Set File Upload</label>
+                        <input type="checkbox" id="toggleFileUpload" name="toggleFileUpload" checked={isFileUpload} onChange={() => setIsFileUpload(!isFileUpload)} />
                     </div>
+
+                    {isFileUpload ? (
+                        <div className="form-group-half">
+                            <label htmlFor="fileUpload">Upload File:</label>
+                            <input type="file" id="fileUpload" name="image" onChange={fileChangeHandler} />
+                            {previewUrl && <img src={previewUrl} alt="preview" />}
+                        </div>
+                    ) : (
+                        <div className="form-group-half">
+                            <label htmlFor="imageUrl">Image URL:</label>
+                            <input type="text" id="imageUrl" name="imageUrl" placeholder="Enter image URL..." value={values.imageUrl} onChange={changeHandler} />
+                        </div>
+                    )}
+
 
                     <div className="form-group-full">
                         <label htmlFor="summary">Summary:</label>

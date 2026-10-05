@@ -1,5 +1,6 @@
 import { useState } from "react";
 import request from "../../utils/request";
+import { useNavigate } from "react-router";
 
 const initialValues = {
     title: "",
@@ -12,6 +13,7 @@ const initialValues = {
 
 export default function GameCreate() {
     const [values, setValues] = useState(initialValues);
+    const navigate = useNavigate();
 
     const changeHandler = (e) => {
         setValues(state => ({
@@ -21,14 +23,18 @@ export default function GameCreate() {
     };
 
     const submitAction = async () => {
-        const result = await request("/games", "POST", {
-            ...values,
-            activePlayers: Number(values.activePlayers)
-        });
+        try {
+            await request("/games", "POST", {
+                ...values,
+                activePlayers: Number(values.activePlayers)
+            });
 
-        console.log(result);
+            navigate('/');
+        } catch (error) {
+            alert(error.message);
+        }
     };
-    
+
     return (
         <section id="add-page">
             <form id="add-new-game" action={submitAction}>

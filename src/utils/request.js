@@ -4,7 +4,8 @@ const url = "https://juiegzuqlaacubisfriq.supabase.co/rest/v1/";
 export default async function request(path = "/", method = "GET", data = null, opts = {}) {
     const options = {
         headers: {
-            apiKey: import.meta.env.VITE_API_KEY
+            apiKey: import.meta.env.VITE_API_KEY,
+            Prefer: "return=representation"
         },
         ...opts
     };
@@ -24,9 +25,9 @@ export default async function request(path = "/", method = "GET", data = null, o
         throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    if ([204, 201].includes(response.status)) {
-        return null;
-    }
+    // if ([204, 201].includes(response.status)) {
+    //     return null;
+    // }
     
     return response.json();
 }

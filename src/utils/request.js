@@ -24,7 +24,7 @@ export default async function request(path = "/", method = "GET", data = null, o
         throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    if (response.status === 204) {
+    if ([204, 201].includes(response.status)) {
         return null;
     }
     

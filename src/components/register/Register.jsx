@@ -1,8 +1,9 @@
-import { useState } from "react";
 import { useNavigate } from "react-router";
 
-export default function Register() {
-    const [user, setUser] = useState(null);
+export default function Register({
+    onRegister,
+}) {
+
     const navigate = useNavigate();
 
     const registerAction = (formData) => {
@@ -22,15 +23,14 @@ export default function Register() {
         }
 
         // Proceed with registration logic (e.g., API call)
-        setUser({ email });
+        onRegister({ email });
 
         // Redirect to home page
-        // navigate("/");
+        navigate("/");
     };
 
     return (
         <>
-            {user && <p>Welcome, {user.email}!</p>}
             <section id="register-page" className="content auth">
                 <form id="register" action={registerAction}>
                     <div className="container">

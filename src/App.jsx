@@ -17,9 +17,7 @@ function App() {
 
     return (
         <>
-            <Header />
-
-            {user && <p>Welcome, {user.email}!</p>}
+            <Header isAuthenticated={!!user} />
 
             <Routes>
                 <Route path="/" element={<Home />} />

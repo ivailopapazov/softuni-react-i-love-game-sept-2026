@@ -7,6 +7,7 @@ import Catalog from "./components/catalog/Catalog"
 import { Route, Routes } from "react-router"
 import GameDetails from "./components/game-details/GameDetails"
 import GameCreate from "./components/game-create/GameCreate"
+import Login from "./components/login/Login"
 
 function App() {
     const [user, setUser] = useState(null);
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/games/:gameId" element={<GameDetails />} />
                 <Route path="/games/create" element={<GameCreate />} />
                 <Route path="/register" element={<Register onRegister={userAuthHandler} />}  />
+                <Route path="/login" element={<Login onLogin={userAuthHandler} />} /> 
             </Routes>
 
             <Footer />

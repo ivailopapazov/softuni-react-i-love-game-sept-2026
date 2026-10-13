@@ -49,6 +49,10 @@ async function baseRequest(url, path = "/", method = "GET", data = null, opts = 
         throw new Error(`HTTP error! status: ${response.status}`);
     }
 
+    if (response.status === 204) {
+        return null;
+    }
+
     return response.json();
 }
 

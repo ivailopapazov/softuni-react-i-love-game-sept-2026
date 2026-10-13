@@ -7,7 +7,7 @@ import CommentsList from "../comment-list/CommentList";
 import { gameApi } from "../../api";
 
 export default function GameDetails() {
-    const { user, accessToken } = useContext(AuthContext);
+    const { user, accessToken, isAuthenticated } = useContext(AuthContext);
     const { gameId } = useParams();
     const navigate = useNavigate();
     const [game, setGame] = useState({});
@@ -86,8 +86,7 @@ export default function GameDetails() {
 
             </div>
 
-            {/* <!-- Add Comment ( Only for logged-in users, which is not creators of the current game ) --> */}
-            {user && <CreateComment user={user} gameId={gameId} onCreate={() => setRefresh(state => !state)} />}
+            {isAuthenticated && !isOwner && <CreateComment user={user} accessToken={accessToken} gameId={gameId} onCreate={() => setRefresh(state => !state)} />}
         </section>
     );
 }

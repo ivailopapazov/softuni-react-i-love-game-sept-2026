@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import request from "../../utils/request";
 import { useNavigate } from "react-router";
 import { gameApi } from "../../api";
 import AuthContext from "../../contexts/auth-context";
@@ -29,7 +28,7 @@ export default function GameCreate() {
 
         try {
             await gameApi.create(values, accessToken);
-            
+
             navigate('/');
         } catch (error) {
             alert(error.message);

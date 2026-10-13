@@ -10,27 +10,35 @@ import GameCreate from "./components/game-create/GameCreate"
 import Login from "./components/login/Login"
 import Logout from "./components/logout/Logout";
 import GameEdit from "./components/game-edit/GameEdit"
+import { register } from "./api/auth-api"
 
 function App() {
-    const [user, setUser] = useState(null);
+    const [auth, setAuth] = useState(null);
 
-    const userAuthHandler = (userData) => {
-        setUser(userData);
+    const userAuthHandler = async (userData) => {
+        // Authenticate with supabase auth
+        try {
+            const result = await register(userData);
+
+            setAuth(result);
+        } catch (error) {
+            alert(error.message);
+        }
     };
 
     const logoutAction = () => {
-        setUser(null);
+        setAuth(null);
     };
 
     return (
         <>
-            <Header isAuthenticated={!!user} />
+            <Header isAuthenticated={!!auth} />
 
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/catalog" element={<Catalog />} />
                 <Route path="/games/create" element={<GameCreate />} />
-                <Route path="/games/:gameId" element={<GameDetails user={user} />} />
+                <Route path="/games/:gameId" element={<GameDetails user={auth} />} />
                 <Route path="/games/:gameId/edit" element={<GameEdit />} />
                 <Route path="/register" element={<Register onRegister={userAuthHandler} />} />
                 <Route path="/login" element={<Login onLogin={userAuthHandler} />} />

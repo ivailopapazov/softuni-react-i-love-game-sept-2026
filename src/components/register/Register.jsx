@@ -25,8 +25,6 @@ export default function Register({
         // Proceed with registration logic (e.g., API call)
         onRegister({ email, password });
 
-        // Redirect to home page
-        navigate("/");
     };
 
     return (

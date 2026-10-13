@@ -2,6 +2,7 @@ import Footer from "./components/footer/Footer"
 import Header from "./components/header/Header"
 import Register from "./components/register/Register"
 import { useState } from "react"
+import { useNavigate } from "react-router"
 import Home from "./components/home/Home"
 import Catalog from "./components/catalog/Catalog"
 import { Route, Routes } from "react-router"
@@ -13,6 +14,8 @@ import GameEdit from "./components/game-edit/GameEdit"
 import { authApi } from "./api"
 
 function App() {
+    const navigate = useNavigate();
+
     const [auth, setAuth] = useState(null);
 
     const register = async (userData) => {
@@ -21,6 +24,8 @@ function App() {
             const result = await authApi.register(userData);
 
             setAuth(result);
+
+            navigate("/");
         } catch (error) {
             alert(error.message);
         }
@@ -38,7 +43,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/catalog" element={<Catalog />} />
                 <Route path="/games/create" element={<GameCreate />} />
-                <Route path="/games/:gameId" element={<GameDetails user={auth} />} />
+                <Route path="/games/:gameId" element={<GameDetails user={auth?.user} />} />
                 <Route path="/games/:gameId/edit" element={<GameEdit />} />
                 <Route path="/register" element={<Register onRegister={register} />} />
                 <Route path="/login" element={<Login onLogin={register} />} />

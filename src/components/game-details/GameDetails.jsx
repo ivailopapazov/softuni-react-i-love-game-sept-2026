@@ -13,6 +13,8 @@ export default function GameDetails() {
     const [game, setGame] = useState({});
     const [refresh, setRefresh] = useState(false);
 
+    const isOwner = user && user?.id === game?.user_id;
+
     useEffect(() => {
         request(`/games?id=eq.${gameId}`)
             .then(result => {
@@ -73,12 +75,12 @@ export default function GameDetails() {
                     </div>
                 </div>
 
-
-                {/* <!-- Edit/Delete buttons ( Only for creator of this game )  --> */}
-                <div className="buttons">
-                    <Link to={`/games/${gameId}/edit`} className="button">Edit</Link>
-                    <a href="#" className="button" onClick={deleteGameClickHandler}>Delete</a>
-                </div>
+                {isOwner && (
+                    <div className="buttons">
+                        <Link to={`/games/${gameId}/edit`} className="button">Edit</Link>
+                        <a href="#" className="button" onClick={deleteGameClickHandler}>Delete</a>
+                    </div>
+                )}
 
                 <CommentsList gameId={gameId} refresh={refresh} />
 

@@ -12,6 +12,7 @@ import Login from "./components/login/Login"
 import Logout from "./components/logout/Logout";
 import GameEdit from "./components/game-edit/GameEdit"
 import { authApi } from "./api"
+import AuthContext from "./contexts/auth-context"
 
 function App() {
     const navigate = useNavigate();
@@ -47,8 +48,16 @@ function App() {
         setAuth(null);
     };
 
+    const contextValue = {
+        accessToken: auth?.access_token,
+        user: auth?.user,
+        isAuthenticated: !!auth,
+        register,
+        login,
+    }
+
     return (
-        <>
+        <AuthContext.Provider value={contextValue}>
             <Header isAuthenticated={!!auth} />
 
             <Routes>
@@ -63,7 +72,7 @@ function App() {
             </Routes>
 
             <Footer />
-        </>
+        </AuthContext.Provider>
     )
 }
 

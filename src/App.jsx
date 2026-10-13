@@ -10,15 +10,15 @@ import GameCreate from "./components/game-create/GameCreate"
 import Login from "./components/login/Login"
 import Logout from "./components/logout/Logout";
 import GameEdit from "./components/game-edit/GameEdit"
-import { register } from "./api/auth-api"
+import { authApi } from "./api"
 
 function App() {
     const [auth, setAuth] = useState(null);
 
-    const userAuthHandler = async (userData) => {
+    const register = async (userData) => {
         // Authenticate with supabase auth
         try {
-            const result = await register(userData);
+            const result = await authApi.register(userData);
 
             setAuth(result);
         } catch (error) {
@@ -40,8 +40,8 @@ function App() {
                 <Route path="/games/create" element={<GameCreate />} />
                 <Route path="/games/:gameId" element={<GameDetails user={auth} />} />
                 <Route path="/games/:gameId/edit" element={<GameEdit />} />
-                <Route path="/register" element={<Register onRegister={userAuthHandler} />} />
-                <Route path="/login" element={<Login onLogin={userAuthHandler} />} />
+                <Route path="/register" element={<Register onRegister={register} />} />
+                <Route path="/login" element={<Login onLogin={register} />} />
                 <Route path="/logout" element={<Logout onLogout={logoutAction} />} />
             </Routes>
 

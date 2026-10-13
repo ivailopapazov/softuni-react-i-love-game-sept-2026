@@ -31,6 +31,18 @@ function App() {
         }
     };
 
+    const login = async (userData) => {
+        try {
+            const result = await authApi.login(userData);
+
+            setAuth(result);
+
+            navigate("/");
+        } catch (error) {
+            alert(error.message);
+        }
+    };
+
     const logoutAction = () => {
         setAuth(null);
     };
@@ -46,7 +58,7 @@ function App() {
                 <Route path="/games/:gameId" element={<GameDetails user={auth?.user} />} />
                 <Route path="/games/:gameId/edit" element={<GameEdit />} />
                 <Route path="/register" element={<Register onRegister={register} />} />
-                <Route path="/login" element={<Login onLogin={register} />} />
+                <Route path="/login" element={<Login onLogin={login} />} />
                 <Route path="/logout" element={<Logout onLogout={logoutAction} />} />
             </Routes>
 

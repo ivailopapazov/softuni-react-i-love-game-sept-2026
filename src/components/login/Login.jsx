@@ -1,10 +1,6 @@
-import { useNavigate } from "react-router";
-
 export default function Login({
     onLogin,
 }) {
-    const navigate = useNavigate();
-
     const submitAction = (formData) => {
         const { email, password } = Object.fromEntries(formData);
 
@@ -13,9 +9,7 @@ export default function Login({
             return;
         }
 
-        onLogin({ email });
-
-        navigate('/');
+        onLogin({ email, password });
     };
 
     return (

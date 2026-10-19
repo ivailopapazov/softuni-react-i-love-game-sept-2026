@@ -31,6 +31,7 @@ async function baseRequest(url, path = "/", method = "GET", data = null, opts = 
             ...opts.headers,
             apiKey: import.meta.env.VITE_API_KEY,
             Prefer: "return=representation",
+            ...getAuthHeader(),
         },
     };
 
@@ -59,9 +60,16 @@ async function baseRequest(url, path = "/", method = "GET", data = null, opts = 
 export default async function request(path = "/", method = "GET", data = null, opts = {}) {
     return baseRequest(restUrl, path, method, data, opts);
 }
-// export default baseRequest.bind(null, restUrl);
 
 export const authRequest = async (path = "/", method = "GET", data = null, opts = {}) => {
     return baseRequest(authUrl, path, method, data, opts);
 };
-// export const authRequest = baseRequest.bind(null, authUrl);
+
+function getAuthHeader() {
+    const auth = localStorage.getItem("auth");
+    const accessToken = auth ? JSON.parse(auth).access_token : null;
+
+    return {
+        ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {})
+    };
+}

@@ -1,17 +1,15 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import GameCard from "../game-card/GameCard";
 import { gameApi } from "../../api";
-import AuthContext from "../../contexts/auth-context";
 
 export default function Catalog() {
-    const { accessToken } = useContext(AuthContext);
     const [games, setGames] = useState([]);
 
     useEffect(() => {
-        gameApi.getAll(accessToken)
+        gameApi.getAll()
             .then(setGames)
             .catch(err => alert(err));
-    }, [accessToken]);
+    }, []);
 
     return (
         <section id="catalog-page">

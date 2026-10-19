@@ -8,3 +8,6 @@ export const create = (data) => {
     return request('/comments', 'POST', data);
 }
 
+export const remove = (id) => {
+    return request(`/comments?id=eq.${id}`, 'DELETE');
+};

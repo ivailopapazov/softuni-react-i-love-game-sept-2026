@@ -1,8 +1,7 @@
+import { useAuth } from "../../contexts/auth-context";
 
-export default function Register({
-    onRegister,
-}) {
-
+export default function Register() {
+    const { register } = useAuth();
 
     const registerAction = (formData) => {
         const email = formData.get("email");
@@ -21,7 +20,7 @@ export default function Register({
         }
 
         // Proceed with registration logic (e.g., API call)
-        onRegister({ email, password });
+        register({ email, password });
 
     };
 

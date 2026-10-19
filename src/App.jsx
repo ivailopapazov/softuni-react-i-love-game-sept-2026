@@ -13,11 +13,12 @@ import Logout from "./components/logout/Logout";
 import GameEdit from "./components/game-edit/GameEdit"
 import { authApi } from "./api"
 import AuthContext from "./contexts/auth-context"
+import usePersistedState from "./hooks/usePersistedState"
 
 function App() {
     const navigate = useNavigate();
 
-    const [auth, setAuth] = useState(null);
+    const [auth, setAuth] = usePersistedState('auth', null);
 
     const register = async (userData) => {
         // Authenticate with supabase auth

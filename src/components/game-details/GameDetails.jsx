@@ -5,13 +5,13 @@ import request from "../../utils/request";
 import CreateComment from "../create-comment/CreateComment";
 import CommentsList from "../comment-list/CommentList";
 import { gameApi } from "../../api";
+import { CommentProvider } from "../../contexts/comment-context";
 
 export default function GameDetails() {
     const { user, isAuthenticated } = useContext(AuthContext);
     const { gameId } = useParams();
     const navigate = useNavigate();
     const [game, setGame] = useState({});
-    const [refresh, setRefresh] = useState(false);
 
     const isOwner = user && user?.id === game?.user_id;
 
@@ -42,51 +42,53 @@ export default function GameDetails() {
     }
 
     return (
-        <section id="game-details">
-            <h1>Game Details</h1>
-            <div className="info-section">
+        <CommentProvider>
+            <section id="game-details">
+                <h1>Game Details</h1>
+                <div className="info-section">
 
-                <div className="header-and-image">
-                    <img className="game-img" src={game.imageUrl} alt={game.title} />
+                    <div className="header-and-image">
+                        <img className="game-img" src={game.imageUrl} alt={game.title} />
 
-                    <div className="meta-info">
-                        <h1 className="game-name">{game.title}</h1>
+                        <div className="meta-info">
+                            <h1 className="game-name">{game.title}</h1>
 
-                        <p className="data-row">
-                            <span className="label">Genre:</span>
-                            <span className="value">{game.genre}</span>
-                        </p>
+                            <p className="data-row">
+                                <span className="label">Genre:</span>
+                                <span className="value">{game.genre}</span>
+                            </p>
 
-                        <p className="data-row">
-                            <span className="label">Active Players:</span>
-                            <span className="value">{game.activePlayers}</span>
-                        </p>
+                            <p className="data-row">
+                                <span className="label">Active Players:</span>
+                                <span className="value">{game.activePlayers}</span>
+                            </p>
 
-                        <p className="data-row">
-                            <span className="label">Release Date:</span>
-                            <span className="value">{game.releaseDate}</span>
-                        </p>
+                            <p className="data-row">
+                                <span className="label">Release Date:</span>
+                                <span className="value">{game.releaseDate}</span>
+                            </p>
+                        </div>
+                        <div className="summary-section">
+                            <h2>Summary:</h2>
+                            <p className="text-summary">
+                                {game.summary}
+                            </p>
+                        </div>
                     </div>
-                    <div className="summary-section">
-                        <h2>Summary:</h2>
-                        <p className="text-summary">
-                            {game.summary}
-                        </p>
-                    </div>
+
+                    {isOwner && (
+                        <div className="buttons">
+                            <Link to={`/games/${gameId}/edit`} className="button">Edit</Link>
+                            <a href="#" className="button" onClick={deleteGameClickHandler}>Delete</a>
+                        </div>
+                    )}
+
+                    <CommentsList gameId={gameId} />
+
                 </div>
 
-                {isOwner && (
-                    <div className="buttons">
-                        <Link to={`/games/${gameId}/edit`} className="button">Edit</Link>
-                        <a href="#" className="button" onClick={deleteGameClickHandler}>Delete</a>
-                    </div>
-                )}
-
-                <CommentsList gameId={gameId} refresh={refresh} />
-
-            </div>
-
-            {isAuthenticated && !isOwner && <CreateComment user={user} gameId={gameId} onCreate={() => setRefresh(state => !state)} />}
-        </section>
+                {isAuthenticated && !isOwner && <CreateComment user={user} gameId={gameId} />}
+            </section>
+        </CommentProvider>
     );
 }

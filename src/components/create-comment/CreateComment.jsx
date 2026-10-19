@@ -1,10 +1,12 @@
 import { commentApi } from "../../api";
+import { useContext } from "react";
+import CommentContext from "../../contexts/comment-context";
 
 export default function CreateComment({
     user,
     gameId,
-    onCreate,
 }) {
+    const { dispatch } = useContext(CommentContext);
     const addCommentAction = async (formData) => {
         const newComment = {
             text: formData.get('text'),
@@ -14,9 +16,9 @@ export default function CreateComment({
         }
 
         try {
-            await commentApi.create(newComment);
+            const result = await commentApi.create(newComment);
 
-            onCreate();
+            dispatch({ type: 'ADD_COMMENT', payload: result[0] });
         } catch (err) {
             alert(err.message);
         }

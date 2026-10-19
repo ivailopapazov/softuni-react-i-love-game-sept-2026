@@ -1,18 +1,19 @@
-import { useEffect, useReducer } from "react";
+import { useEffect } from "react";
 import CommentItem from "./comment-item/CommentItem";
-import { commentReducer } from "./comment-reducer";
 import { commentApi } from "../../api";
+
+import { useContext } from "react";
+import CommentContext from "../../contexts/comment-context";
 
 export default function CommentList({
     gameId,
-    refresh,
 }) {
-    const [comments, dispatch] = useReducer(commentReducer, []);
+    const { comments, dispatch } = useContext(CommentContext);
 
     useEffect(() => {
         commentApi.getAll(gameId)
             .then(result => dispatch({ type: 'SET_COMMENTS', payload: result }))
-    }, [gameId, refresh]);
+    }, [gameId, dispatch]);
 
     const deleteCommentHandler = (id) => {
         commentApi.remove(id)

@@ -1,3 +1,6 @@
 {
-    "previews": {}
+    "previews": {},
+    "assets": {
+        "not_found_handling": "single_page_application"
+    }
 }

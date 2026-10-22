@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "softuni-react-i-love-game-sept-2026",
+  "name": "github-react-i-love-game-sept-2026",
   "compatibility_date": "2026-10-19",
   "observability": {
     "enabled": true

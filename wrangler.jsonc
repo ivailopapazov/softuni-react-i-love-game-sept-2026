@@ -1,6 +1,9 @@
 {
-    "previews": {},
-    "assets": {
-        "not_found_handling": "single-page-application"
-    }
+  "name": "softuni-react-i-love-game-sept-2026",
+  "compatibility_date": "2026-10-19",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  },
+  "previews": {}
 }

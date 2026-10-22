@@ -48,10 +48,10 @@ export function AuthProvider({
     const logoutAction = async () => {
         try {
             await authApi.logout(auth?.access_token);
-
-            setAuth(null);
         } catch (error) {
             alert(error.message);
+        } finally {
+            setAuth(null);
         }
     };
 

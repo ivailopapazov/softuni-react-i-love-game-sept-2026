@@ -1,6 +1,7 @@
 import { commentApi } from "../../api";
 import { useContext } from "react";
 import CommentContext from "../../contexts/comment-context";
+import { toast } from "react-toastify";
 
 export default function CreateComment({
     user,
@@ -20,7 +21,7 @@ export default function CreateComment({
 
             dispatch({ type: 'ADD_COMMENT', payload: result[0] });
         } catch (err) {
-            alert(err.message);
+            toast.error(err.message);
         }
     };
 

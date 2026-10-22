@@ -67,7 +67,7 @@ export const authRequest = async (path = "/", method = "GET", data = null, opts 
 
 function getAuthHeader() {
     const auth = localStorage.getItem("auth");
-    const accessToken = auth ? JSON.parse(auth).access_token : null;
+    const accessToken = auth ? JSON.parse(auth)?.access_token : null;
 
     return {
         ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {})

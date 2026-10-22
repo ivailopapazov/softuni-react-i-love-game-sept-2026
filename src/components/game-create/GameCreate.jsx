@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import { gameApi } from "../../api";
 
@@ -26,10 +27,10 @@ export default function GameCreate() {
 
         try {
             await gameApi.create(values);
-
+            toast.success('Game created successfully');
             navigate('/');
         } catch (error) {
-            alert(error.message);
+            toast.error(error.message);
         }
     };
 

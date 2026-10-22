@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router"
 
 import { AuthProvider } from "./contexts/auth-context"
+import { ToastContainer } from "react-toastify"
 
 import Footer from "./components/footer/Footer"
 import Header from "./components/header/Header"
@@ -30,6 +31,8 @@ function App() {
                 <Route path="/logout" element={<Logout />} />
                 <Route path="/profile" element={<Profile />} />
             </Routes>
+
+            <ToastContainer  />
 
             <Footer />
         </AuthProvider>

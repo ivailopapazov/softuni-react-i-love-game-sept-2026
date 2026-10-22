@@ -1,9 +1,29 @@
+import { toast } from 'react-toastify';
+import { storageRequest } from '../../utils/request';
 import styles from './Profile.module.css';
+import { useNavigate } from 'react-router';
 
 export default function Profile() {
+    const navigate = useNavigate();
+    const uploadFileHandler = async (formData) => {
+        const file = formData.get('profile-picture');
+
+        try {
+            await storageRequest(file.name, file);
+            // TODO update database with the new profile picture URL or reference
+            //https://juiegzuqlaacubisfriq.supabase.co/storage/v1/object/public/pictures
+            toast.success('Profile picture updated successfully!');
+
+            navigate('/');
+        } catch (error) {
+            toast.error('Failed to update profile picture.');
+        }
+    }
+
+    // TODO show current profile picture from the database or storage URL
     return (
         <section>
-            <form>
+            <form action={uploadFileHandler}>
                 <div className={styles.container}>
                     <h1>Profile</h1>
 

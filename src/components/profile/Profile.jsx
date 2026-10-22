@@ -5,7 +5,7 @@ export default function Profile() {
         <section>
             <form>
                 <div className={styles.container}>
-                    <h1>My Profile</h1>
+                    <h1>Profile</h1>
 
                     {/* Profile Picture */}
                     <div>
